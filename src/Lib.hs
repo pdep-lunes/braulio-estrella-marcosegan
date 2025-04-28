@@ -2,6 +2,9 @@ module Lib () where
 
 import Text.Show.Functions ()
 
+doble :: Int -> Int
+doble x = x * 2
+
 data Personaje = ConstruirPersonaje {
         nombre :: String,
         poderBasico :: Poder,
@@ -10,11 +13,14 @@ data Personaje = ConstruirPersonaje {
         vida :: Int
     }
     deriving Show
+
 type Poder = Personaje -> Personaje
+type TipoDeTuerca = String
+type Contrincante = Personaje
 
 -- Poderes
 
-quitarVida :: Personaje -> Int -> Personaje
+quitarVida :: Contrincante -> Int -> Contrincante
 quitarVida personaje danio
     | vida personaje >= danio = personaje { vida = vida personaje - danio }
     | otherwise = personaje { vida = 0 }
@@ -22,9 +28,7 @@ quitarVida personaje danio
 bolaEspinosa :: Poder
 bolaEspinosa contrincante = quitarVida contrincante 1000
 
-type TipoDeTuerca = String
-
-lluviaDeTuercas :: TipoDeTuerca -> Personaje -> Personaje
+lluviaDeTuercas :: TipoDeTuerca -> Contrincante -> Contrincante
 lluviaDeTuercas tipoDeTuerca contrincante
     | tipoDeTuerca == "Sanadora" = contrincante { vida = vida contrincante + 800 }
     | tipoDeTuerca == "Dañina" = contrincante { vida = vida contrincante `div` 2 }
@@ -41,20 +45,15 @@ granadaDeEspinasPotente contrincante
         }
     | otherwise = contrincante { nombre = nombre contrincante ++ "Espina estuvo aquí" }
 
-granadaDeEspinas :: Int -> Personaje -> Personaje
+granadaDeEspinas :: Int -> Contrincante -> Contrincante
 granadaDeEspinas radioDeExplosion contrincante
     | radioDeExplosion > 3 = granadaDeEspinasPotente contrincante
     | otherwise = contrincante
-
-doble :: Int -> Int
-doble x = x * 2
 
 torretaCurativa :: Poder
 torretaCurativa aliado = aliado { superPoderEstaActivo = True, vida = doble $ vida aliado }
 
 -- Reportes
-
-type Contrincante = Personaje
 
 atacarConPoderEspecial :: Personaje -> Contrincante -> Contrincante
 atacarConPoderEspecial personaje contrincante
