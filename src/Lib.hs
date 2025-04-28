@@ -54,3 +54,12 @@ torretaCurativa aliado = aliado { superPoderEstaActivo = True, vida = doble $ vi
 
 -- Reportes
 
+type Contrincante = Personaje
+
+atacarConPoderEspecial :: Personaje -> Contrincante -> Contrincante
+atacarConPoderEspecial personaje contrincante
+    | superPoderEstaActivo personaje = poderBasico personaje.superPoder personaje $ contrincante
+    | otherwise = contrincante
+
+brawlersQueEstanEnLasUltimas :: [Personaje] -> [Personaje]
+brawlersQueEstanEnLasUltimas personajes = filter ((<800).vida) personajes
