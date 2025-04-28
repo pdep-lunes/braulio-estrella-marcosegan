@@ -12,6 +12,8 @@ data Personaje = ConstruirPersonaje {
     deriving Show
 type Poder = Personaje -> Personaje
 
+-- Poderes
+
 quitarVida :: Personaje -> Int -> Personaje
 quitarVida personaje danio
     | vida personaje >= danio = personaje { vida = vida personaje - danio }
@@ -44,8 +46,11 @@ granadaDeEspinas radioDeExplosion contrincante
     | radioDeExplosion > 3 = granadaDeEspinasPotente contrincante
     | otherwise = contrincante
 
-torretaCurativa :: Poder
-torretaCurativa aliado = aliado { superPoderEstaActivo = True, vida = vida aliado * 2 }
-
 doble :: Int -> Int
 doble x = x * 2
+
+torretaCurativa :: Poder
+torretaCurativa aliado = aliado { superPoderEstaActivo = True, vida = doble $ vida aliado }
+
+-- Reportes
+
