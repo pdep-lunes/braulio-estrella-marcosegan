@@ -45,7 +45,7 @@ granadaDeEspinasPotente contrincante
         }
     | otherwise = contrincante { nombre = nombre contrincante ++ "Espina estuvo aquí" }
 
-granadaDeEspinas :: Int -> Contrincante -> Contrincante
+granadaDeEspinas :: Int -> Poder
 granadaDeEspinas radioDeExplosion contrincante
     | radioDeExplosion > 3 = granadaDeEspinasPotente contrincante
     | otherwise = contrincante
@@ -62,3 +62,13 @@ atacarConPoderEspecial personaje contrincante
 
 brawlersQueEstanEnLasUltimas :: [Personaje] -> [Personaje]
 brawlersQueEstanEnLasUltimas personajes = filter ((<800).vida) personajes
+
+-- Modelar a Espina
+
+espina :: Personaje
+espina = ConstruirPersonaje "Espina" bolaEspinosa (granadaDeEspinas 5) True 4800
+
+-- Modelar a Pamela
+
+pamela :: Personaje
+pamela = ConstruirPersonaje "Pamela" (lluviaDeTuercas "Sanadoras") torretaCurativa False 9600
